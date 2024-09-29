@@ -7,7 +7,8 @@ RUN apk update && apk add --no-cache \
     py3-pip \
     musl-dev \
     libffi-dev \
-    && pip install --upgrade pip
+    && pip install --upgrade pip \
+    && pip install setuptools
 
 
 WORKDIR /data
