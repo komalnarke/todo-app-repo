@@ -1,15 +1,26 @@
 
-FROM node:12.2.0-alpine
+
+FROM python:3.12-alpine
+
+RUN apk add --no-cache py3-pip python3-dev libffi-dev gcc musl-dev linux-headers
 
 
-WORKDIR /node
+RUN apk add --no-cache python3-distutils
+
+
+WORKDIR /data
+
+
+RUN pip install django==3.2
 
 
 COPY . .
 
-RUN npm install
-RUN npm run test
+
+RUN python manage.py migrate
+
+
 EXPOSE 8000
 
 
-CMD ["node","app.js"]
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
