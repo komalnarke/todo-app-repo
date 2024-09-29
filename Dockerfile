@@ -1,24 +1,19 @@
-
-
 FROM python:3.12-alpine
 
-RUN apk add --no-cache py3-pip python3-dev libffi-dev gcc musl-dev linux-headers
-
-
-RUN apk add --no-cache python3-distutils
+RUN apk add --no-cache build-base \
+    && apk add --no-cache python3-dev \
+    && apk add --no-cache py3-pip \
+    && apk add --no-cache python3-distutils
 
 
 WORKDIR /data
 
-
-RUN pip install django==3.2
-
-
 COPY . .
 
 
-RUN python manage.py migrate
+RUN pip install --no-cache-dir -r requirements.txt
 
+RUN python manage.py migrate
 
 EXPOSE 8000
 
