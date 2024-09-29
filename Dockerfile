@@ -1,9 +1,13 @@
+
 FROM python:3.12-alpine
 
-RUN apk add --no-cache build-base \
-    && apk add --no-cache python3-dev \
-    && apk add --no-cache py3-pip \
-    && apk add --no-cache python3-distutils
+RUN apk update && apk add --no-cache \
+    build-base \
+    python3-dev \
+    py3-pip \
+    musl-dev \
+    libffi-dev \
+    && pip install --upgrade pip
 
 
 WORKDIR /data
@@ -19,3 +23,7 @@ EXPOSE 8000
 
 
 CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+
+
+
+
